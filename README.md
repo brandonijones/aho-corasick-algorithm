@@ -51,8 +51,11 @@ added is a child of the current node. If the corresponding index in the array is
 ![build_trie](https://user-images.githubusercontent.com/65355965/155633143-1f890e63-0e62-4768-91bd-9e197d33a3b4.png)
 
 ## Building Failure and Dictionary Links
+To build the failure links and dictionary links, you can use a Breadth-First-Search approach. Start at the root node and add all of its children to a queue. At each node you visit, add it's children to the queue. All children of the root will have their failure links pointing to the root. After visiting the root's children, we continue visiting the nodes that are in the queue. If the current node in the queue has children, we keep track of the failure link of the current node in the queue (called `temp`) and each child (`currentChild`). If `temp` does not have a child that matches the index (letter) of the `currentChild`, then there is no suffix that matches the current path. Therefore you give the `currentChild` a failure link of `root`, which is an empty string. If a suffix does exist, then give the `currentChild` a failure link to the corresponding index of `temp`. Then add the `currentChild` to the queue and continue the process for the rest of the children.
+Then for dictionary links, check if the current node's failure link is a word. If it is a word, point the dictionary link to that failure link. If not, the dictionary link remains null.
 ![build_failure_and_dictionary_links](https://user-images.githubusercontent.com/65355965/155633175-5a151e83-1994-44e1-bafa-0f6cf2d931d1.png)
 
 ## Search Method
+Searching is simple. Start at the root of the tree and compare the children to the current letter in the string passed in the method. If the current letter in the string is a child of the current node in the tree, then traverse to that corresponding node. If the current node is a word node, notify to the console that a word was found. If the current letter is not a child of the current node in the tree, follow the failure link and check again. if there are no children that matches the current letter of the string at the root, then go to the next letter in the string. Whenever you pass through a node with a dictionary link that is null, mark that another word has been found too.
 ![search](https://user-images.githubusercontent.com/65355965/155633203-caa86685-04a2-4463-b531-08f543d354b5.png)
 
